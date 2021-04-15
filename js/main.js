@@ -1,3 +1,4 @@
+
 (function (jQuery) {
   var body = jQuery(document.body || 'body');
   var main = jQuery('main');

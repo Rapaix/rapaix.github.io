@@ -5,20 +5,15 @@
 // para fazer a sua coleta.
 // Caso tenha alguma dúvida sobre o case, não hesite em entrar em contato.
 
-console.log(ga)
-
 let menuListaContato = document.querySelectorAll('.menu-lista-contato');
 let menuListaDownload = document.querySelectorAll('.menu-lista-download');
 let menuListaAnalise = document.querySelectorAll('.menu-lista-analise');
 let menuListaSobre = document.querySelectorAll('.menu-lista-sobre')
 let menuListaIndex = document.querySelectorAll('.menu-lista-index')
-let analiseBtns = document.querySelectorAll('.cards-montadoras')
-
-// console.log(analiseBtns.getAttribute('data-id'));
+let analiseBtns = document.querySelectorAll('.card-montadoras')
 
 
 analiseBtns.forEach( function(btn){
-    console.log(btn.dataset.name)
     btn.addEventListener('click', function(event){
         ga('send', 'event',{
             eventAction: 'ver_mais',
@@ -31,7 +26,6 @@ analiseBtns.forEach( function(btn){
 });
 
 menuListaContato.forEach( function(btn){
-    // console.log(btn)
     btn.addEventListener('click', function(event){
         ga('send', 'event',{
             eventAction: 'entre_em_contato',
@@ -106,26 +100,34 @@ menuListaDownload.forEach( function(btn){
 //     nonInteractive: [True | False]
 //   });
 
-function pegarInput(){
-    let id = document.getElementById("nome");
-    let email = document.getElementById("email");
-    let telefone = document.getElementById("telefone");
-    let aceito = document.getElementById("aceito");
-    let arr =[id,email, telefone, aceito]
-    console.log(arr);
-    for(i=0; i < arr.lenght;i++){
-        console.log(arr[i].value);
-    }
-    
-    let campos = id +" "+ email +" " +  telefone +" "+ aceito
-    console.log(campos)
+function enviar(){
+    let obj = {id: document.getElementById("nome").value,
+         email : document.getElementById("email").value,
+         telefone : document.getElementById("telefone").value,
+         aceito : document.getElementById("aceito").checked
+        }
+    let campos = ''
+    for ( prop in obj){
+        if (obj[prop]!= "" || obj[prop]!= false){
+            campos += prop +", " }
+    }  
     ga('send', 'event',{
                     eventAction: 'contato',
                     eventCategory: campos,
                     eventLabel: "preencheu"
-                }
-        
-                )
-    
+                 }
+    )
 
+    popup();
+}
+
+function popup(){
+    let popup= document.querySelector('.lightbox-content');
+    console.log(popup);
+    ga('send', 'event',{
+        eventAction: 'enviado',
+        eventCategory: 'contato',
+        eventLabel: "enviado"
+     }
+    )
 }
